@@ -7,15 +7,19 @@ function App() {
   const { data: cities } = useQuery("cities", getCities);
 
   return (
-    <main className="p-1">
-      <h1 className="text-3xl text-center font-black my-4">
+    <main className="px-1 py-4">
+      <h1 className="text-3xl text-center text-balance font-black mb-4">
         City Data Summarization 🏙️
       </h1>
-      <section className="container flex flex-col gap-2 items-center">
+      <section className="container px-2 flex flex-col gap-2 items-center">
         <div className="hidden sm:block w-full lg:w-2/3">
           <PopulationChart cities={cities || []} />
         </div>
-        {cities?.map((city) => <CityCard key={city.id} city={city} />)}
+        {cities?.map((city) => (
+          <div key={city.id} className="w-full lg:w-2/3">
+            <CityCard city={city} />
+          </div>
+        ))}
       </section>
     </main>
   );
