@@ -7,25 +7,49 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
-import { getCityDetails } from "@/lib/utils";
+import { generateCitySummary, getCityDetails } from "@/lib/utils";
 import {
   UsersRoundIcon,
   GlobeIcon,
   MountainSnowIcon,
   SparklesIcon,
+  CircleDashedIcon,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams, Navigate } from "react-router-dom";
 
 export default function City() {
   const { id } = useParams();
   const { data: city } = useQuery(["city", id], () => getCityDetails(id));
+  const [citySummary, setCitySummary] = useState("");
+  const [summaryLoading, setSummaryLoading] = useState(false);
+
+  useEffect(() => {
+    if (city) {
+      const summary = localStorage.getItem(`city-summary-${id}`);
+      if (summary) {
+        setCitySummary(summary);
+      } else {
+        setCitySummary("");
+      }
+    }
+  }, [city, id]);
+
   if (!id || isNaN(Number(id))) return <Navigate to="/" />;
 
+  async function generateSummary() {
+    setSummaryLoading(true);
+    const summary = await generateCitySummary(city!);
+    setCitySummary(summary);
+    setSummaryLoading(false);
+    localStorage.setItem(`city-summary-${id}`, summary);
+  }
   if (!city) {
     return (
-      <div className="flex justify-center items-center w-full mt-12">
+      <div className="flex justify-center items-center w-full mt-24">
         <Spinner />
       </div>
     );
@@ -86,12 +110,36 @@ export default function City() {
           </Carousel>
         </>
       )}
-      <section className="text-center flex flex-col gap-2">
+      <section className="text-center flex flex-col gap-2 w-full">
         <h2 className="text-2xl mt-8 font-semibold text-balance">AI Summary</h2>
-        <Button className="gap-2">
-          <SparklesIcon />
-          <span>Generate City Summary</span>
-        </Button>
+        {!citySummary && (
+          <Button onClick={generateSummary} className="gap-2 max-w-sm mx-auto">
+            {summaryLoading ? (
+              <>
+                <CircleDashedIcon className="animate-spin" />
+                <span>Generating Summary</span>
+              </>
+            ) : (
+              <>
+                <SparklesIcon />
+                <span>Generate City Summary</span>
+              </>
+            )}
+          </Button>
+        )}
+        {summaryLoading && (
+          <div className="flex flex-col gap-1 w-full">
+            <Skeleton className="w-full h-4" />
+            <Skeleton className="w-full h-4" />
+            <Skeleton className="w-full h-4" />
+            <Skeleton className="w-full h-4" />
+            <Skeleton className="w-full h-4" />
+            <Skeleton className="w-2/3 h-4" />
+          </div>
+        )}
+        {citySummary && (
+          <p className="text-justify max-w-4xl mx-auto">{citySummary}</p>
+        )}
       </section>
     </main>
   );

@@ -37,3 +37,17 @@ export async function getCityDetails(
     );
   }
 }
+
+export async function generateCitySummary(city: CityDetails) {
+  const { summary }: { summary: string } = await fetch(
+    `http://localhost:${SERVER_PORT}/cities/summary`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ city }),
+    },
+  ).then((res) => res.json());
+  return summary;
+}
