@@ -4,11 +4,7 @@ import { getCities } from "@/lib/utils";
 import { useQuery } from "react-query";
 
 function App() {
-  const { data: cities } = useQuery("cities", getCities, {
-    refetchOnWindowFocus: false,
-    staleTime: Infinity,
-    cacheTime: 1000 * 60 * 60,
-  });
+  const { data: cities } = useQuery("cities", getCities);
 
   return (
     <main className="p-1">
