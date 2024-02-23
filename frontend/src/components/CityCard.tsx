@@ -61,8 +61,8 @@ export default function CityCard({
           {city.distance && (
             <p className="text-muted-foreground flex gap-2 align-center">
               <RouteIcon />
-              <span>Distance: </span>
-              <span className="text-foreground font-semibold">
+              <span className="sm:text-nowrap">Distance to {city.name}: </span>
+              <span className="text-foreground font-semibold sm:text-nowrap">
                 {city.distance} Miles
               </span>
             </p>

@@ -13,7 +13,6 @@ import {
   UsersRoundIcon,
   GlobeIcon,
   MountainSnowIcon,
-  RadiusIcon,
   SparklesIcon,
 } from "lucide-react";
 import { useQuery } from "react-query";
@@ -66,9 +65,8 @@ export default function City() {
       </section>
       {city.nearbyCities.length > 0 && (
         <>
-          <h2 className="text-2xl mt-8 font-semibold text-balance flex gap-1 items-center">
-            <RadiusIcon className="text-muted-foreground" />
-            100 Mile Radius Nearby Cities
+          <h2 className="text-2xl mt-8 font-semibold text-center">
+            {city.nearbyCities.length} Cities Found in a 100 Mile Radius:
           </h2>
           <Carousel
             opts={{
