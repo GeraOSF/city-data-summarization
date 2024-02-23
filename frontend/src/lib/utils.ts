@@ -19,3 +19,21 @@ export async function getCities(): Promise<City[]> {
     throw new Error("An error occurred while fetching cities.");
   }
 }
+
+export async function getCityDetails(
+  id: string | undefined,
+): Promise<CityDetails> {
+  if (!id || isNaN(Number(id))) {
+    throw new Error("Invalid city id.");
+  }
+  try {
+    return await fetch(`http://localhost:${SERVER_PORT}/cities/${id}`).then(
+      (res) => res.json(),
+    );
+  } catch (error) {
+    console.error(error);
+    throw new Error(
+      `An error occurred while fetching details of city with id: ${id}`,
+    );
+  }
+}

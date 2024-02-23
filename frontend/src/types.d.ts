@@ -4,6 +4,16 @@ type GeoDBResponse = {
   metadata: Metadata;
 };
 
+type Link = {
+  rel: string;
+  href: string;
+};
+
+type Metadata = {
+  currentOffset: number;
+  totalCount: number;
+};
+
 type City = {
   id: number;
   wikiDataId: string;
@@ -19,12 +29,7 @@ type City = {
   population: number;
 };
 
-type Link = {
-  rel: string;
-  href: string;
-};
-
-type Metadata = {
-  currentOffset: number;
-  totalCount: number;
+type CityDetails = City & {
+  elevationMeters: number;
+  nearbyCities: (City & { distance: number })[];
 };

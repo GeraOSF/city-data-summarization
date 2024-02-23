@@ -1,5 +1,6 @@
 import App from "@/App.tsx";
 import "@/index.css";
+import City from "@/pages/City";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     element: <App />,
     path: "/",
+  },
+  {
+    element: <City />,
+    path: "/city/:id?",
   },
 ]);
 
