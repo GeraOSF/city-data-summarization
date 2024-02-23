@@ -1,10 +1,15 @@
 import CityCard from "./components/CityCard";
 import PopulationChart from "./components/PopulationChart";
 import { getCities } from "@/lib/utils";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
 
 function App() {
   const { data: cities } = useQuery("cities", getCities);
+
+  useEffect(() => {
+    document.title = "City Data Summarization | J. Blanton Plumbing";
+  }, []);
 
   return (
     <main className="px-1 py-4">

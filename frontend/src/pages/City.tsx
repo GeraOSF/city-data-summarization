@@ -38,6 +38,12 @@ export default function City() {
     }
   }, [city, id]);
 
+  useEffect(() => {
+    document.title = city
+      ? `${city.name}, ${city.region} | City Details`
+      : "City Details";
+  }, [city]);
+
   if (!id || isNaN(Number(id))) return <Navigate to="/" />;
 
   async function generateSummary() {
