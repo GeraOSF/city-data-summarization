@@ -4,7 +4,7 @@ const citiesRouter = Router();
 
 const COUNTRY = "US";
 const TYPE = "CITY";
-const MIN_POPULATION = 500000;
+const MIN_POPULATION = 900000;
 const LIMIT = 10;
 
 citiesRouter.get("/", async (_, res) => {

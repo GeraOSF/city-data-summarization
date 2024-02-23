@@ -8,6 +8,8 @@ type City = {
   id: number;
   wikiDataId: string;
   city: string;
+  country: string;
+  countryCode: string;
   name: string;
   region: string;
   regionCode: string;

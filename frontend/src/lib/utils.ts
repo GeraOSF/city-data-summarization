@@ -9,9 +9,11 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function getCities(): Promise<City[]> {
   try {
-    return await fetch(`http://localhost:${SERVER_PORT}/cities`).then((res) =>
-      res.json(),
-    );
+    const response: GeoDBResponse = await fetch(
+      `http://localhost:${SERVER_PORT}/cities`,
+    ).then((res) => res.json());
+    const { data: cities } = response;
+    return cities;
   } catch (error) {
     console.error(error);
     throw new Error("An error occurred while fetching cities.");
